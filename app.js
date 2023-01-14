@@ -15,10 +15,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-const db = require('./db');
-db.any('select 3 as test').then(console.log).catch(console.error)
-
-
 app.use('/', indexRouter);
 app.use('/api', apiRouter);
 

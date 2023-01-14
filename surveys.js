@@ -39,6 +39,20 @@ async function listResponses(privateId) {
   return result;
 }
 
+async function getSurvey(publicId) {
+  const survey = await db.oneOrNone('SELECT id, questions FROM surveys WHERE public_id = $1', [publicId])
+  if(!survey) {
+    return {
+      status: 'no_matching_survey'
+    }
+  }
+  return {
+    status: 'success',
+    id: survey.id,
+    questions: survey.questions
+  }
+}
+
 
 // {"status": "no_matching_survey"} - Couldn't find which survey this response is for
 // {"status": "success"}
@@ -56,15 +70,17 @@ async function createResponse(publicId, responseData) {
   // return {"status": "invalid_format"} - The response data doesn't fit the survey
 
   try {
-    const result = await db.none('INSERT INTO survey_responses(survey_id, response_data) values($1, $2)', [survey.id, responseData])
+    const result = await db.one('INSERT INTO survey_responses(survey_id, response_data) values($1, $2) returning id', [survey.id, responseData])
     return { status: "success", responseId: result.id }
   } catch(e) {
+    console.error(e);
     return { status: "failure" }
   }
 }
 
 module.exports = {
   createSurvey,
+  getSurvey,
   listResponses,
   createResponse
 };
