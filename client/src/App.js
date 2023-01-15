@@ -1,4 +1,4 @@
-import { Button, ChakraProvider, } from '@chakra-ui/react'
+import { ChakraProvider, } from '@chakra-ui/react'
 import {
   createBrowserRouter,
   RouterProvider,
@@ -6,6 +6,11 @@ import {
 import CreateSurvey from './pages/CreateSurvey';
 import Home from './pages/Home';
 import Survey from './pages/Survey';
+
+import {
+  QueryClient,
+  QueryClientProvider
+} from 'react-query'
 
 const router = createBrowserRouter([{
   path: "/",
@@ -25,11 +30,14 @@ const router = createBrowserRouter([{
   ]
 }])
 
+const queryClient = new QueryClient()
 
 function App() {
   return (
     <ChakraProvider>
-      <RouterProvider router={router} />
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
     </ChakraProvider>
   );
 }
