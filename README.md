@@ -6,7 +6,7 @@
   * Creator can send special link like `/survey_response/${privateId}` or
   we can overload `/surveys/${publicId}` to find surveys OR responses
   * Add an `updateResponse()` in the surveys module
-  * Add `status` to `survey_responses`
+  * Add `status` to `survey_responses`, or just read the response_data and determine status
     * Backfill with `submitted` 
     * `viewed` means they used the private link and creator can see that
 
@@ -23,6 +23,12 @@
   * Add _users_surveys join table
 
 
+# Todo
+
+* Rename `public_id` / `private_id` to `owner_token` or `viewer_token`
+* Create `survey_tokens` table with id, token, survey_id, is_owner?, inserted_at, uses
+* Add `survey_token_id` to `survey_responses` to track which token the response came from
+
 
 # Surveys module
 
@@ -37,3 +43,13 @@ TODO
 # Testing
 
 TODO
+
+# Frontend
+* Create survey screen
+  * Question data editor
+* View survey
+  * Responses
+  * Get trackable link
+* Manage survey
+  * Get responses
+  * 
