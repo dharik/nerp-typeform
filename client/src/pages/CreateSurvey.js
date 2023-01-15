@@ -9,7 +9,7 @@ export default function CreateSurvey() {
   const navigate = useNavigate();
 
   const createQuery = useMutation("createSurvey", async (q) => {
-    const r = await fetch("http://localhost:3000/api/surveys", {
+    const r = await fetch("/api/surveys", {
       method: "POST",
       body: JSON.stringify(q),
       headers: {

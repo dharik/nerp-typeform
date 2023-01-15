@@ -14,7 +14,7 @@ export default function SurveyResults({ token }) {
     "responses",
     async () => {
       const r = await fetch(
-        "http://localhost:3000/api/survey_responses?token=" + token,
+        "/api/survey_responses?token=" + token,
         {
           method: "GET",
           headers: {

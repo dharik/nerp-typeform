@@ -26,7 +26,7 @@ export default function SurveyLinks({ token }) {
     "links",
     async () => {
       const r = await fetch(
-        "http://localhost:3000/api/survey_tokens?token=" + token,
+        "/api/survey_tokens?token=" + token,
         {
           method: "GET",
           headers: {
@@ -46,7 +46,7 @@ export default function SurveyLinks({ token }) {
     "createToken",
     async (name) => {
       const r = await fetch(
-        "http://localhost:3000/api/survey_tokens?token=" + token,
+        "/api/survey_tokens?token=" + token,
         {
           method: "POST",
           body: JSON.stringify({ name }),

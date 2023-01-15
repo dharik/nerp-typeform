@@ -25,6 +25,7 @@ async function createSurvey(questionData) {
       publicToken: publicToken.token,
     };
   } catch (e) {
+    console.error(e);
     return { status: "failure", e };
   }
 }
@@ -157,6 +158,7 @@ async function getSurvey(inputToken) {
   };
 }
 
+// {"status": "invalid_token"} - Couldn't find token
 // {"status": "no_matching_survey"} - Couldn't find which survey this response is for
 // {"status": "success"}
 // {"status": "failure"}

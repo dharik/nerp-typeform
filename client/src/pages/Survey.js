@@ -28,7 +28,7 @@ export default function Survey() {
   const loadSurveyQuery = useQuery(
     "survey",
     async () => {
-      const r = await fetch("http://localhost:3000/api/surveys/" + token, {
+      const r = await fetch("/api/surveys/" + token, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -48,7 +48,7 @@ export default function Survey() {
   const submitSurveyMutation = useMutation(
     "submitSurvey",
     async (responseData) => {
-      const r = await fetch("http://localhost:3000/api/survey_responses", {
+      const r = await fetch("/api/survey_responses", {
         method: "POST",
         body: JSON.stringify({
           token: token,
