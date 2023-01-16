@@ -6,9 +6,7 @@
 
 # Deployment
 
-(todo) To deploy, just git push to the master branch
-
-Until then:
+(deployment with git push to master is WIP)
 
 1. SSH into the EC2 instance
 2. Git pull
@@ -17,7 +15,6 @@ Until then:
 5. `pm2 start bin/www`
 
 Server should be running at http://ec2-18-117-233-70.us-east-2.compute.amazonaws.com:3000/
-
 
 
 ### Database access: SSH tunnel through the EC2 instance
@@ -42,28 +39,16 @@ npm install pm2 -g
 # Ideas
 
 * Expiring surveys or surveys with public results
-  * Add expires_at, public_at
-  * If user wants it to expire, just set expires_at. Then no more responses accepted
-  after that date
-  * If user wants it to be public, set public_at. After then, responses can be
-  made public
-  * Similarly, add starts_at to limit when responses can begin. Or public_until to limit
-  how long responses are public for
-
-* My surveys (via login)
-  * Add _users_surveys join table
-
-* My surveys (without login)
-  * Append owner token to a localStorage item
+* My surveys
+  * owner tokens in localStorage, or passport + users table + _users_surveys table
 
 # Todo
 
-* Deploy on EC2 + RDS
 * CI/CD
-* Add helmet for security
+* Add helmet for extra security headers
 * Add prettierrc file
 * Limit cors origins
-* Handle error when token isn't a valid UUID
+* Handle error when token isn't a valid UUID (server crashes instead of 404)
 
 # Surveys module
 
@@ -80,7 +65,7 @@ responses would be created for every survey.
 
 * Surveys have all of their questions stored in a json column in the surveys table.
 This app only cares about one survey at a time so memory usage probably won't be
-a concern
+a concern if the # of questions in a survey is large (100+)
 
 * Surveys with many (10k+) tokens or responses can be problematic on the frontend.
 A virtual list/table component would alleviate that. 
@@ -101,18 +86,18 @@ captchas, honey pots could help.
 
 
 
-# Things to learn about Node backend
+# Things to learn about Node backends
 
 * HOT RELOAD
 * Is there a repl? I run `node` in the directory and have to `require()` every file?
 There's got to be a way to run the equivalent of `irb`
 * Since JS's standard lib is lacking, just use lodash + moment? Anything better yet?
 * Express vs Hapi vs others
-* Auth - looks like Passport is the standard. Seems similar to Elixir's Pow - middleware
-+ strategies
+* Auth - looks like Passport is the standard as middleware
 * Error handling practices - I noticed the whole server goes down if one request errors out
   I saw `pm2` is what people use. A) Avoid errors in the first place B) catch them in middleware?
-* Env config (dotenv)
+* Env config best practices
+* Debugging best practices (`console.error` vs logger?)
 * Database migration patterns?
 
 
@@ -128,3 +113,4 @@ high-churn on the codebase or this is a high-value app for the business
   * Check survey owner page for at least 2 responses with
     different sources
 * Unit tests for the `surveys.js` module
+* Integration test to hit API and check survey creation, sumit response, new response is in response list
