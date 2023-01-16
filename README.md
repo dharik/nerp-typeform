@@ -44,6 +44,11 @@ npm install pm2 -g
 
 # Todo
 
+* Figure out how to do EC2 -> RDS connection without manually setting
+db password env var. RDS rotates the db pass every 7 days so this needs
+to be addressed ASAP. I could disable the pass rotation to buy more time
+
+
 * Add a custom domain so we can get SSL.
 * Set up nginx on the ec2 instance to proxy traffic on
 :443 or :80 to node's :3000
