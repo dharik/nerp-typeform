@@ -1,3 +1,38 @@
+# Deployment
+
+(todo) To deploy, just git push to the master branch
+
+Until then:
+
+1. SSH into the EC2 instance
+2. Git pull
+3. `npm install`
+4. `cd client && npm install && npm run build`
+5. `pm2 start bin/www`
+
+Server should be running at http://ec2-18-117-233-70.us-east-2.compute.amazonaws.com:3000/
+
+
+
+### Database access: SSH tunnel through the EC2 instance
+
+In postico, use the connect via SSH option.
+Get database password from amazon secrets manager
+
+
+### AMI setup
+```
+sudo yum update
+sudo yum install git
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+# source .bashrc
+nvm install 16 # 18 doesn't work with the amazon linux ami
+nvm use 16
+git clone https://github.com/dharik/nerp-typeform.git
+cd nerp-typeform
+npm install pm2 -g
+```
+
 # Ideas
 
 * Expiring surveys or surveys with public results
