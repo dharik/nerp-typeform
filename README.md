@@ -1,5 +1,6 @@
 # Local development
 
+* VSCode has a great dev containers extension so you can isolate your dev env
 * Make your `.env` file and configure appropriately. Use `.env.sample` as a starting point
 * `npm run start` to run backend
 * `npm run start` to run CRA (in `client/` folder)
@@ -9,13 +10,13 @@
 (deployment with git push to master is WIP)
 
 1. SSH into the EC2 instance
-2. Git pull
+2. `git pull`
 3. `npm install`
 4. `cd client && npm install && npm run build`
-5. `pm2 start bin/www`
+5. `pm2 start bin/www` or `pm2 reload (TODO: Correct command)`
 
-Server should be running at http://ec2-18-117-233-70.us-east-2.compute.amazonaws.com:3000/
-
+Server should be running at 
+http://ec2-18-117-233-70.us-east-2.compute.amazonaws.com:3000/
 
 ### Database access: SSH tunnel through the EC2 instance
 
@@ -38,7 +39,8 @@ npm install pm2 -g
 
 # Ideas
 
-* Expiring surveys or surveys with public results
+* Expire survey/token
+* Public results by survey/token
 * My surveys
   * owner tokens in localStorage, or passport + users table + _users_surveys table
 
@@ -87,6 +89,9 @@ force the database to save massive amounts of junk data. IP based throttling,
 captchas, honey pots could help.
 
 * Add load balancer and distribute requests to multiple EC2 instances
+
+* Aggregate survey results on backend vs passing responses w/ question data
+
 
 
 
