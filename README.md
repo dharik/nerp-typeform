@@ -44,6 +44,9 @@ npm install pm2 -g
 
 # Todo
 
+* Add a custom domain so we can get SSL.
+* Set up nginx on the ec2 instance to proxy traffic on
+:443 or :80 to node's :3000
 * CI/CD
 * Add helmet for extra security headers
 * Add prettierrc file
@@ -83,6 +86,8 @@ be a good preventantive measure. Retrace & Prometheus look like the go-to
 * An attacker could hit the API with lots of fake survey responses. Which could
 force the database to save massive amounts of junk data. IP based throttling,
 captchas, honey pots could help.
+
+* Add load balancer and distribute requests to multiple EC2 instances
 
 
 
