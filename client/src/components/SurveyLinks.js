@@ -83,7 +83,7 @@ export default function SurveyLinks({ token }) {
                 <Td>{token.name}</Td>
                 <Td>{token.response_count}</Td>
                 <Td>
-                  <Input value={token.token} variant="filled" />
+                  <Input value={`${window.location.origin}/survey/${token.token}`} variant="filled" readOnly />
                 </Td>
               </Tr>
             );

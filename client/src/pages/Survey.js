@@ -63,7 +63,6 @@ export default function Survey() {
     },
     {
       onSuccess: () => {
-        console.log("mutation success");
         queryClient.invalidateQueries("links");
         queryClient.invalidateQueries("responses");
       },

@@ -12,12 +12,18 @@
 * My surveys (via login)
   * Add _users_surveys join table
 
+* My surveys (without login)
+  * Append owner token to a localStorage item
 
 # Todo
 
-* Add helmet for security
 * Add dotenv
-* Add URL host to shared links table
+* Deploy on EC2 + RDS
+* CI/CD
+* Add helmet for security
+* Add prettierrc file
+* Limit cors origins
+* Handle error when token isn't a valid UUID
 
 # Surveys module
 
