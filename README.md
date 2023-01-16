@@ -48,19 +48,13 @@ npm install pm2 -g
 db password env var. RDS rotates the db pass every 7 days so this needs
 to be addressed ASAP. I could disable the pass rotation to buy more time
 
+* Add bug tracking (ie bugsnag or equivalent)
 
-* Add a custom domain so we can get SSL.
-* Set up nginx on the ec2 instance to proxy traffic on
-:443 or :80 to node's :3000
 * CI/CD
 * Add helmet for extra security headers
 * Add prettierrc file
 * Limit cors origins
 * Handle error when token isn't a valid UUID (server crashes instead of 404)
-
-# Surveys module
-
-
 
 # Scalability
 
@@ -109,6 +103,7 @@ There's got to be a way to run the equivalent of `irb`
 * Env config best practices
 * Debugging best practices (`console.error` vs logger?)
 * Database migration patterns?
+* Would like to use `import` instead of `require()`
 
 
 # Testing
@@ -124,3 +119,30 @@ high-churn on the codebase or this is a high-value app for the business
     different sources
 * Unit tests for the `surveys.js` module
 * Integration test to hit API and check survey creation, sumit response, new response is in response list
+
+# Tech stack reflection
+
+* I used react (to match an existing tech stack) but the only spot
+React *really* makes sense is the survey create flow. Answering survey
+and viewing responses + creating share links can easily have been
+server-rendered pages.
+
+* I didn't use typescript, again to match an existing tech stack, but
+I definitely would have otherwise
+
+* I used plain old Express. I think it's a good choice. There are other
+paths like Nest.JS, but that would've taken too long to learn and maybe
+overkill. I like how simple this ended up.
+
+* I deployed on EC2 + RDS to match existing tech stack. But I could have
+tried a few other options:
+  * Host frontend on netlify (or equivalent) + backend on lambdas
+  * Elastic beanstalk has a node/postgres starter kit. Could be better
+    if that handles autoscaling and EC2 <-> RDS security / config
+  * Heroku or equivalent
+
+* Did not use an ORM, again to match an existing tech stack. I think it'd
+have been worth it given how simple this app is
+
+* Needed a custom domain to use https. If I had one I would've had nginx
+on the ec2 instance to proxy traffic on :443 or :80 to node's :3000.
