@@ -1,3 +1,9 @@
+# Local development
+
+* Make your `.env` file and configure appropriately. Use `.env.sample` as a starting point
+* `npm run start` to run backend
+* `npm run start` to run CRA (in `client/` folder)
+
 # Deployment
 
 (todo) To deploy, just git push to the master branch
@@ -52,7 +58,6 @@ npm install pm2 -g
 
 # Todo
 
-* Add dotenv
 * Deploy on EC2 + RDS
 * CI/CD
 * Add helmet for security
