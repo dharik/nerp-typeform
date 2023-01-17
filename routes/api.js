@@ -1,5 +1,4 @@
 var express = require("express");
-const { token } = require("morgan");
 const {
   createSurvey,
   getSurvey,
