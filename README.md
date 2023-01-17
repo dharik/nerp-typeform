@@ -91,7 +91,8 @@ be a good preventantive measure. Retrace & Prometheus look like the go-to
 force the database to save massive amounts of junk data. IP based throttling,
 captchas, honey pots could help.
 
-* Add load balancer and distribute requests to multiple EC2 instances
+* Add load balancer and distribute requests to multiple EC2 instances or
+switch to lambdas & api gateway
 
 * Aggregate survey results on backend vs passing responses w/ question data.
 Especially once multiple questions can be created per survey, displaying
