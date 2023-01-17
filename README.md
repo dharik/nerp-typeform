@@ -9,11 +9,12 @@
 
 (deployment with git push to master is WIP)
 
-1. SSH into the EC2 instance
+1. SSH into the EC2 instance `ssh -i "nerpkey.pem" ec2-user@ec2-18-117-233-70.us-east-2.compute.amazonaws.com`
+2. `cd nerp-typeform`
 2. `git pull`
 3. `npm install`
 4. `cd client && npm install && npm run build`
-5. `pm2 start bin/www` or `pm2 reload (TODO: Correct command)`
+5. `pm2 start bin/www` or `pm2 reload all`
 
 Server should be running at 
 http://ec2-18-117-233-70.us-east-2.compute.amazonaws.com:3000/
@@ -32,6 +33,7 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 # source .bashrc
 nvm install 16 # 18 doesn't work with the amazon linux ami
 nvm use 16
+nvm default alias 16
 git clone https://github.com/dharik/nerp-typeform.git
 cd nerp-typeform
 npm install pm2 -g
@@ -47,16 +49,17 @@ npm install pm2 -g
 # Todo
 
 * Figure out how to do EC2 -> RDS connection without manually setting
-db password env var. RDS rotates the db pass every 7 days so this needs
-to be addressed ASAP. I could disable the pass rotation to buy more time
-
+db password env var. I disabled the pass rotation to get this released
+but I think using secrets manager to get the db password is a better
+approach
 * Add bug tracking (ie bugsnag or equivalent)
-
-* CI/CD
+* CI/CD setup
 * Add helmet for extra security headers
 * Add prettierrc file
 * Limit cors origins
 * Handle error when token isn't a valid UUID (server crashes instead of 404)
+* I used manual fetch() calls in the frontend. I'd set up a utility fetch()
+function to always set `application/json` header, await, etc
 
 # Scalability
 
@@ -90,7 +93,11 @@ captchas, honey pots could help.
 
 * Add load balancer and distribute requests to multiple EC2 instances
 
-* Aggregate survey results on backend vs passing responses w/ question data
+* Aggregate survey results on backend vs passing responses w/ question data.
+Especially once multiple questions can be created per survey, displaying
+results will require some log. IE every question may map to a column, but
+what should that column header be? What if the survey questions changed 
+after having results already?
 
 
 
@@ -125,7 +132,11 @@ high-churn on the codebase or this is a high-value app for the business
 * Unit tests for the `surveys.js` module
 * Integration test to hit API and check survey creation, sumit response, new response is in response list
 
-# Tech stack reflection
+# Tech stack
+
+* I used plain old Express. I think it's a good choice. There are other
+paths like Nest.JS, but that would've taken too long to learn and probably
+overkill. I like how simple this ended up.
 
 * I used react (to match an existing tech stack) but the only spot
 React *really* makes sense is the survey create flow. Answering survey
@@ -135,14 +146,11 @@ server-rendered pages.
 * I didn't use typescript, again to match an existing tech stack, but
 I definitely would have otherwise
 
-* I used plain old Express. I think it's a good choice. There are other
-paths like Nest.JS, but that would've taken too long to learn and maybe
-overkill. I like how simple this ended up.
-
 * I deployed on EC2 + RDS to match existing tech stack. But I could have
 tried a few other options:
-  * Host frontend on netlify (or equivalent) + backend on lambdas
-  * Elastic beanstalk has a node/postgres starter kit. Could be better
+  * Host frontend on netlify (or equivalent)
+  * Backend on lambdas
+  * Elastic beanstalk has a node/postgres template. Could be better
     if that handles autoscaling and EC2 <-> RDS security / config
   * Heroku or equivalent
 
